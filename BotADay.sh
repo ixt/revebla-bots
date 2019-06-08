@@ -25,7 +25,7 @@ quote_repeating_week(){
     
     local QUOTE=$(sed -n ${VALUE}p $QUOTEFILE)
     echo «${QUOTE}» - ${PERSON} >&2
-    $tweet post "«${QUOTE}» - ${PERSON}" 
+    $tweet_script post "«${QUOTE}» - ${PERSON}" 
 }
 
 too_good_to_fail(){
@@ -44,7 +44,7 @@ archive_name(){
     local NAME=$(t whois $USER -c | cut -d, -f10 | sed -n 2p)
     local SUM=$(md5sum <<< "$NAME" | cut -d" " -f1)
     if ! grep -q $SUM $DATADIR/$USER.sums; then
-        t update "New Display name: "$NAME" #$USER"
+        $tweet_script post "New Display name: "$NAME" #$USER"
         echo $SUM >> $DATADIR/$USER.sums
         echo $DATE: $NAME >> $DATADIR/$USER.names
     fi
