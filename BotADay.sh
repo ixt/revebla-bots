@@ -49,3 +49,18 @@ archive_name(){
         echo $DATE: $NAME >> $DATADIR/$USER.names
     fi
 }
+
+screenshot(){
+    # We repeat this 4 times just to make it takes it 
+    local url="$1"
+    local screenshot="$2"
+    local width="$3"
+    local height="$4"
+    local fileSize="0"
+    echo "[INFO]: Screenshot"
+        if [ -e "/usr/bin/chromium" ]; then
+        chromium --headless --disable-gpu ${url} --hide-scrollbars --virtual-time-budget=120000 --window-size=${width},${height} --force-device-scale-factor=2 --hide-scroll-bars --screenshot=${screenshot}
+        else
+        chromium-browser --headless --disable-gpu ${url} --hide-scrollbars --virtual-time-budget=120000 --window-size=${width},${height} --force-device-scale-factor=2 --hide-scroll-bars --screenshot=${screenshot}
+        fi
+}
