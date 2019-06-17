@@ -1,11 +1,12 @@
 #!/bin/bash
-set -euo pipefail
+#set -euo pipefail
 IFS=$'\n\t'
 TOOLDIR="/home/psifork/Projects/botadaybotaway/Tools"
 DATADIR="/home/psifork/Projects/revebla-bots/data"
 export PATH=$PATH:$TOOLDIR
 tweet_script=$TOOLDIR/tweet.sh/tweet.sh
 RAKE_script=$TOOLDIR/RAKE.sh/RAKE.sh
+DEBUG=0
 
 quote_repeating_week(){
     # $1 - Quote file
@@ -30,10 +31,12 @@ quote_repeating_week(){
 
 too_good_to_fail(){
     local Notworking=1
-    while [[ $Notworking -gt "0" ]]; do
-    	$1
-    	$2
+    while [[ "$Notworking" -gt "0" ]]; do
+        [[ "$DEBUG" == "1" ]] && echo "too good to fail loop $1 & $2"
+    	bash $1
+    	bash $2
     	Notworking="$?"
+        [[ "$DEBUG" == "1" ]] && echo $Notworking
     done
 }
 

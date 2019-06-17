@@ -1,8 +1,8 @@
 #!/bin/bash
 TEMPVID=$(mktemp --suffix=.mp4)
 TEMPAUDIO=$(mktemp)
-TEMPIMAGE="image.jpg"
-TEMPIMAGE1="image1.jpg"
+TEMPIMAGE=$(mktemp --suffix=.jpg)
+TEMPIMAGE1=$(mktemp --suffix=.jpg)
 TEMP=$(mktemp)
 lynx -listonly -dump http://www.xeno-canto.org/explore/random \
 	| grep download \
@@ -13,16 +13,16 @@ lynx -listonly -dump http://www.xeno-canto.org/explore/random \
 	| grep -E -A 2 'javascript|Citation$' \
 	| sed -n "3p;7p" > $TEMP
 
-TITLE=$(head -1 $TEMP | sed "s/.*·//g")
+TITLE=$(head -1 $TEMP | sed "s/.*Â·//g")
 echo $TITLE
 AUDIOATRIBUTION=$(tail -1 $TEMP)
 echo $AUDIOATRIBUTION
-URL=$(head -1 $TEMP | sed "s/·.*//g" | sed "s/XC//g;s/ //g")
+URL=$(head -1 $TEMP | sed "s/Â·.*//g" | sed "s/XC//g;s/ //g")
 echo $URL
 wget -qO $TEMPAUDIO "https://www.xeno-canto.org/$URL/download"
 CLEANTITLE=$(printf $TITLE)
 echo $CLEANTITLE
-KEY=$(curl "http://api.gbif.org/v1/species/search?q=$(printf $TITLE | sed -e "s/.*·//g;s/ /%20/g")"  | jq .results[1].nubKey )
+KEY=$(curl "http://api.gbif.org/v1/species/search?q=$(printf $TITLE | sed -e "s/.*Â·//g;s/ /%20/g")"  | jq .results[1].nubKey )
 echo $KEY
 curl "https://www.gbif.org/species/$KEY"  > $TEMP
 IMAGEATRIBUTION=$(lynx -dump -nonumbers -nolist "https://www.inaturalist.org/photos/$(
@@ -46,3 +46,4 @@ $IMAGEATRIBUTION
 Audio: 
 $AUDIOATRIBUTION"
 rm -rf $TEMPAUDIO $TEMPVID $TEMPIMAGE $TEMPIMAGE1
+exit 0
