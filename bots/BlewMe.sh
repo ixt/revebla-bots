@@ -9,14 +9,14 @@ IFS=$'\n\t'
 SCRIPTDIR=$(dirname $0)
 LATESTTWEETS=$(mktemp)
 pushd $SCRIPTDIR 
+. ../BotADay.sh
 
 # Make sure we have a file for tweets we have seen
 touch ../data/_xs.seenids
 
 printf "Getting tweets\n"
 
-t timeline -c $(t whoami | grep "Screen name" | cut -d@ -f2) \
-    | sed -e "/,RT/d" \
+$tweet_script fetch-tweets | jq .[].id
         > $LATESTTWEETS
 
 printf "Got tweets\n"
@@ -30,13 +30,9 @@ while read tweet; do
 
     printf "Checking tweet ${tweet_info[0]}\n"
 
-    faves=$(t status ${tweet_info[0]} -c \
-        | rev \
-        | cut -d, -f3 \
-        | rev \
-        | tail -1)
+    faves=$($tweet_script fetch ${tweet_info[0]} | jq .favorite_count)
     if [[ "$faves" -gt 10 ]]; then
-        t reply ${tweet_info[0]} "damn this blew up 😳😳"
+        $tweet_script reply ${tweet_info[0]} "damn this blew up 😳😳"
         echo ${tweet_info[0]} >> ../data/_xs.seenids
     fi
 done < <(tail -n +2 $LATESTTWEETS)
