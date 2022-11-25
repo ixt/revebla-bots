@@ -1,4 +1,7 @@
 #!/bin/bash
 # https://twitter.com/craigbased/status/991683967622332416
-cd ~
-t update "Today will not be good." -P ".trc.notgood"
+pushd $(dirname $0)
+. ../../BotADay.sh
+source_trc ~/.trc.notgood 
+$tweet_script post "Today will not be good"
+popd

@@ -7,6 +7,7 @@ export PATH=$PATH:$TOOLDIR
 tweet_script=$TOOLDIR/tweet.sh/tweet.sh
 RAKE_script=$TOOLDIR/RAKE.sh/RAKE.sh
 DEBUG=0
+MY_LANGUAGE=en-GB
 
 quote_repeating_week(){
     # $1 - Quote file
@@ -66,4 +67,12 @@ screenshot(){
         else
         chromium-browser --headless --disable-gpu ${url} --hide-scrollbars --virtual-time-budget=120000 --window-size=${width},${height} --force-device-scale-factor=2 --hide-scroll-bars --screenshot=${screenshot}
         fi
+}
+
+source_trc(){
+    source <(yq ".profiles[][]" $1 --yaml-output \
+        | sed -e "s/username/MY_SCREEN_NAME/" \
+              -e "s/consumer/CONSUMER/g;s/secret/SECRET/g;s/key/KEY/;s/token/ACCESS_TOKEN/g;s/^SECRET/ACCESS_TOKEN_SECRET/g" \
+              -e "s/: /=/g" -e "s/^/export /g")
+    $tweet_script whoami
 }
