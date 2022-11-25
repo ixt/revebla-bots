@@ -1,8 +1,8 @@
 #!/bin/bash
 #set -euo pipefail
 IFS=$'\n\t'
-TOOLDIR="/home/psifork/Projects/botadaybotaway/Tools"
-DATADIR="/home/psifork/Projects/revebla-bots/data"
+TOOLDIR="/home/orange/Projects/botadaybotaway/Tools"
+DATADIR="/home/orange/Projects/revebla-bots/data"
 export PATH=$PATH:$TOOLDIR
 tweet_script=$TOOLDIR/tweet.sh/tweet.sh
 RAKE_script=$TOOLDIR/RAKE.sh/RAKE.sh

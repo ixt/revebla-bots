@@ -35,7 +35,7 @@ while read tweet; do
         | cut -d, -f3 \
         | rev \
         | tail -1)
-    if [[ "$faves" -gt 5 ]]; then
+    if [[ "$faves" -gt 10 ]]; then
         t reply ${tweet_info[0]} "damn this blew up 😳😳"
         echo ${tweet_info[0]} >> ../data/_xs.seenids
     fi

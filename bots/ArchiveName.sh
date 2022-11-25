@@ -5,7 +5,8 @@
 pushd $(dirname $0)
 . ../BotADay.sh
 
-USERS=( "ElSangito" "_xs" )
+# USERS=( "ElSangito" "_xs" )
+USERS=( "_xs" )
     for USER in ${USERS[@]}; do
         archive_name "$USER"
     done
