@@ -1,7 +1,8 @@
 #!/bin/bash
 # Search for all the drink glasses of water tweets and extract the number of glasses and take a mean average
 pushd $(dirname $0)
-. ../BotADay.sh
+source ../BotADay.sh
+#source_trc ~/.trc.orange 
 average=$($tweet_script search -q 'Drink \* glasses of water' \
     | jq -r .statuses[].text \
     | sed -e "s/[^0-9. -]//g" \
@@ -10,5 +11,6 @@ average=$($tweet_script search -q 'Drink \* glasses of water' \
     | sed -e "s/^\.//g" \
     | datamash mean 1 \
     | cut -d. -f1)
-$tweet_script post "Remember to drink $average glasses of water a day! #PSA"
+message="Remember to drink $average glasses of water a day! #PSA"
+echo "$message" | $tweet_script post | jq .
 popd

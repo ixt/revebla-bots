@@ -7,7 +7,6 @@ export PATH=$PATH:$TOOLDIR
 tweet_script=$TOOLDIR/tweet.sh/tweet.sh
 RAKE_script=$TOOLDIR/RAKE.sh/RAKE.sh
 DEBUG=0
-MY_LANGUAGE=en-GB
 
 quote_repeating_week(){
     # $1 - Quote file
@@ -74,5 +73,6 @@ source_trc(){
         | sed -e "s/username/MY_SCREEN_NAME/" \
               -e "s/consumer/CONSUMER/g;s/secret/SECRET/g;s/key/KEY/;s/token/ACCESS_TOKEN/g;s/^SECRET/ACCESS_TOKEN_SECRET/g" \
               -e "s/: /=/g" -e "s/^/export /g")
+    MY_LANGUAGE=en-GB
     $tweet_script whoami
 }
