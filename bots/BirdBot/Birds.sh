@@ -39,11 +39,16 @@ grep "inaturalist" $TEMP \
 	| xargs wget -O $TEMPIMAGE1
 convert $TEMPIMAGE1 -scale 200% $TEMPIMAGE
 yes | ffmpeg -loop 1 -i $TEMPIMAGE -i $TEMPAUDIO -c:v libx264 -tune stillimage -c:a aac -b:a 192k -pix_fmt yuv420p -t 00:00:30 -shortest $TEMPVID
+. ~/Projects/revebla-bots/BotADay.sh
+source_trc ~/.trc-bird
+# t update -P ~/.trc-bird -f $TEMPVID 
 
-t update -P ~/.trc-bird -f $TEMPVID "$TITLE - 
+export VIDEO_FILENAME="$TEMPVID"
+export TWEET_TEXT="$TITLE - 
 Image: 
 $IMAGEATRIBUTION 
 Audio: 
 $AUDIOATRIBUTION"
+python3 ~/Projects/revebla-bots/async-upload.py
 rm -rf $TEMPAUDIO $TEMPVID $TEMPIMAGE $TEMPIMAGE1
 exit 0
