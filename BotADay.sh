@@ -4,7 +4,7 @@ IFS=$'\n\t'
 TOOLDIR="/home/orange/Projects/botadaybotaway/Tools"
 DATADIR="/home/orange/Projects/revebla-bots/data"
 export PATH=$PATH:$TOOLDIR
-tweet_script=$TOOLDIR/tweet.sh/tweet.sh
+tweet_script="/home/orange/Projects/tweet.sh/tweet.sh"
 RAKE_script=$TOOLDIR/RAKE.sh/RAKE.sh
 DEBUG=0
 
