@@ -44,7 +44,7 @@ archive_name(){
     local DATE=$(date +%s)
     local USER="$1"
     touch $DATADIR/$USER.sums $DATADIR/$USER.names
-    local NAME=$(t whois $USER -c | cut -d, -f10 | sed -n 2p)
+    local NAME=$($tweet_script fetch-tweets -u $USER -c 1 | jq -r .[].user.name)
     local SUM=$(md5sum <<< "$NAME" | cut -d" " -f1)
     if ! grep -q $SUM $DATADIR/$USER.sums; then
         $tweet_script post "New Display name: "$NAME" #$USER"

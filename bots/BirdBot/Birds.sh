@@ -41,7 +41,6 @@ convert $TEMPIMAGE1 -scale 200% $TEMPIMAGE
 yes | ffmpeg -loop 1 -i $TEMPIMAGE -i $TEMPAUDIO -c:v libx264 -tune stillimage -c:a aac -b:a 192k -pix_fmt yuv420p -t 00:00:30 -shortest $TEMPVID
 . ~/Projects/revebla-bots/BotADay.sh
 source_trc ~/.trc-bird
-# t update -P ~/.trc-bird -f $TEMPVID 
 
 export VIDEO_FILENAME="$TEMPVID"
 export TWEET_TEXT="$TITLE - 
