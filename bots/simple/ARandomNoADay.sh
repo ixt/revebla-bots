@@ -1,5 +1,8 @@
 #!/bin/bash
 NUMBER="$RANDOM"
+pushd $(dirname $0)
+. ../../BotADay.sh
+source_trc ~/.trc.randomnoaday
 if [[ $(( $NUMBER % 2 )) == 0 ]]; then
     BORDER="white"
 else 
@@ -12,5 +15,6 @@ convert -background blue -font 'Noto-Sans-Black' -pointsize 1500 \
     -bordercolor $BORDER -border 100x100 \
     number.png
 echo "$NUMBER $BORDER"
-t update -P ~/.trc.randomnoaday -f number.png "$NUMBER"
+$tweet_script post -i number.png "$NUMBER"
 rm number.png
+popd

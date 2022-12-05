@@ -14,11 +14,11 @@ OLDID=$(egrep "$(echo $LASTMONTH | xargs -Il date --date="@l" +"%B the %d")" ../
 ID=$(egrep "$(date +"%B the ${DAYS[$DAY]}")" ../../data/ListOfPaulsTweets \
     | cut -d, -f2)
 
-$tweet_script retweet "$ID"
-echo $ID
 if [ "1511301101" -lt "${LASTMONTH}" ]; then
     $tweet_script unretweet "$OLDID"
 fi
+$tweet_script retweet "$ID"
+echo $ID
 popd
 
 
