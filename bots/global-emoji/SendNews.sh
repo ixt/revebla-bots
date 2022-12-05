@@ -6,7 +6,7 @@ rm sample.tweets
 touch sample.tweets
 . .newsapikey
 [ ! -e "emoji.json" ] && wget -qO emoji.json https://raw.githubusercontent.com/github/gemoji/master/db/emoji.json
-[ ! -e "google-10000-english.txt" ] && wget -qO google-10000-english.txt https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english.txt
+TENKCORPUS="/home/orange/Pkgs/google-10000-english/google-10000-english.txt"
 
 curl https://newsapi.org/v2/top-headlines -G \
         -d language=en \
@@ -14,7 +14,7 @@ curl https://newsapi.org/v2/top-headlines -G \
         | tee sample.json
 
 sed -e "s/^/s\/\\\([^a-z]\\\)/Ig" -e "s/$/\\\1 \\\2\/Ig/Ig" -e "s@,@\\\([^a-z]\\\)/ @Ig" filter.csv > filter.patterns
-sed -e "s/^/s\/\\\([^a-z]\\\)/Ig" -e "s/$/\\\([^a-z]\\\)\/\\\1 \\\2\/Ig/Ig" <(head -49 google-10000-english.txt) >> filter.patterns
+sed -e "s/^/s\/\\\([^a-z]\\\)/Ig" -e "s/$/\\\([^a-z]\\\)\/\\\1 \\\2\/Ig/Ig" <(head -49 $TENKCORPUS) >> filter.patterns
 cat numbers.patterns >> filter.patterns
 
 
