@@ -13,6 +13,7 @@ declare -A matrix
 
 pushd $SCRIPTDIR >/dev/null
 LINE=("" "" "" "" "" "" "" "" "" "" "" "" "")
+source ../BotADay.sh
 
 getRandomImage() {
 	echo "Getting random image"
@@ -147,7 +148,7 @@ ${LINE[8]}
 ${LINE[9]}
 \"$WORD\" - Orange ($(date +%Y))"
 if [[ ! "${2:-not e}" == "E" ]]; then
-twurl -d "tweet_mode=extended&status=${LINE[0]}
+echo "${LINE[0]}
 ${LINE[1]}
 ${LINE[2]}
 ${LINE[3]}
@@ -156,5 +157,5 @@ ${LINE[6]}
 ${LINE[7]}
 ${LINE[8]}
 ${LINE[9]}
-\"$WORD\" - Orange ($(date +%Y))" /1.1/statuses/update.json
+\"$WORD\" - Orange ($(date +%Y))" | $tweet_script post | jq . 
 fi
