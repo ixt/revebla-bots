@@ -4,7 +4,7 @@ currentDir=$(dirname $0)
 pushd $currentDir
 rm sample.tweets
 touch sample.tweets
-. .newsapikey
+. ~/.newsapikey
 [ ! -e "emoji.json" ] && wget -qO emoji.json https://raw.githubusercontent.com/github/gemoji/master/db/emoji.json
 TENKCORPUS="/home/orange/Pkgs/google-10000-english/google-10000-english.txt"
 
