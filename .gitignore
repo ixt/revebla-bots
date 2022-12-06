@@ -2,3 +2,5 @@ data/bitcoin*
 data/_xs.tweet.list
 data/.beemoviescript
 bots/twemoji/*
+*package-lock.json
+bots/CyberKidz/npm/node_modules
